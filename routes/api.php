@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('/salesorder','OrderController@salesOrderWHI');
 Route::get('/pbi_salesorder','OrderController@salesOrderPBI');
+Route::get('/ccc_salesorder','OrderController@salesOrderCCC');
 // Route::get('/so_item','OrderController@salesOrderItem');
