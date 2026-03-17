@@ -21,3 +21,15 @@ Route::get('/salesorder','OrderController@salesOrderWHI');
 Route::get('/pbi_salesorder','OrderController@salesOrderPBI');
 Route::get('/ccc_salesorder','OrderController@salesOrderCCC');
 // Route::get('/so_item','OrderController@salesOrderItem');
+
+Route::prefix('v2')->group(function() {
+    Route::get('/salesorder','OrderController@salesOrderWHIV2');
+    Route::get('/salesorder/distinct','OrderController@salesOrderWHIDistinct');
+
+    Route::get('/pbi_salesorder','OrderController@salesOrderPBIV2');
+    Route::get('/pbi_salesorder/distinct','OrderController@salesOrderPBIDistinct');
+
+    Route::get('/ccc_salesorder','OrderController@salesOrderCCCV2');
+    Route::get('/ccc_salesorder/distinct','OrderController@salesOrderCCCDistinct');
+});
+
