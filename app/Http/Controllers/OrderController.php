@@ -60,6 +60,7 @@ class OrderController extends Controller
             $page = $request->page ?? 1;
             $limit = $request->limit ?? 10;
             $buyersCode = $request->buyersCode ?? "";
+            $soNumber = $request->soNumber ?? "";
             
             $salesOrdersWHI = ORDR::with(['items' => function($query) {
                 $query->select('DocEntry', 'Dscription', 'ItemCode', 'Quantity');
@@ -69,6 +70,9 @@ class OrderController extends Controller
 
             if (!empty($buyersCode)) {
                 $salesOrdersWHI = $salesOrdersWHI->where('NumAtCard',$buyersCode); 
+            }
+            if (!empty($soNumber)) {
+                $salesOrdersWHI = $salesOrdersWHI->where('DocNum',$soNumber); 
             }
 
             if ($request->filled('startDate') && $request->filled('endDate')) {
@@ -117,9 +121,7 @@ class OrderController extends Controller
             $endDate = $request->endDate ?? "";
             
             $salesOrdersWHI = ORDR::select(DB::raw('MIN(DocDate) as DocDate'),'NumAtCard as BuyersCode', 'CardName',DB::raw('COUNT(NumAtCard) as Count'))
-            ->where('DocStatus', 'O')
-            ->groupBy('NumAtCard')
-            ->groupBy('CardName');
+            ->where('DocStatus', 'O');
 
             if ($request->filled('startDate') && $request->filled('endDate')) {
                 $start = Carbon::parse($request->startDate)->startOfDay();
@@ -127,10 +129,11 @@ class OrderController extends Controller
 
                 $salesOrdersWHI->whereBetween('DocDate', [$start, $end]);
             }
-
+            $salesOrdersWHI = $salesOrdersWHI->groupBy('NumAtCard')
+            ->groupBy('CardName');
             $totalCount = (clone $salesOrdersWHI)->get()->count();
 
-            $salesOrdersWHI = $salesOrdersWHI->orderBy("NumAtCard","desc")
+            $salesOrdersWHI = $salesOrdersWHI->orderByRaw('MIN(DocDate) DESC')
                 ->skip(($page - 1) * $limit)
                 ->take($limit)
                 ->get();
@@ -165,7 +168,8 @@ class OrderController extends Controller
             $page = $request->page ?? 1;
             $limit = $request->limit ?? 10;
             $buyersCode = $request->buyersCode ?? "";
-            
+            $soNumber = $request->soNumber ?? "";
+
             $salesOrdersWHI = ORDR_PBI::with(['items' => function($query) {
                 $query->select('DocEntry', 'Dscription', 'ItemCode', 'Quantity');
             }])
@@ -174,6 +178,9 @@ class OrderController extends Controller
 
             if (!empty($buyersCode)) {
                 $salesOrdersWHI = $salesOrdersWHI->where('NumAtCard',$buyersCode); 
+            }
+            if (!empty($soNumber)) {
+                $salesOrdersWHI = $salesOrdersWHI->where('DocEntry',$soNumber); 
             }
 
             if ($request->filled('startDate') && $request->filled('endDate')) {
@@ -222,9 +229,7 @@ class OrderController extends Controller
             $endDate = $request->endDate ?? "";
             
             $salesOrdersWHI = ORDR_PBI::select(DB::raw('MIN(DocDate) as DocDate'),'NumAtCard as BuyersCode', 'CardName',DB::raw('COUNT(NumAtCard) as Count'))
-            ->where('DocStatus', 'O')
-            ->groupBy('NumAtCard')
-            ->groupBy('CardName');
+            ->where('DocStatus', 'O');
 
             if ($request->filled('startDate') && $request->filled('endDate')) {
                 $start = Carbon::parse($request->startDate)->startOfDay();
@@ -233,9 +238,12 @@ class OrderController extends Controller
                 $salesOrdersWHI->whereBetween('DocDate', [$start, $end]);
             }
 
+            $salesOrdersWHI = $salesOrdersWHI->groupBy('NumAtCard')
+            ->groupBy('CardName');
+
             $totalCount = (clone $salesOrdersWHI)->get()->count();
 
-            $salesOrdersWHI = $salesOrdersWHI->orderBy("NumAtCard","desc")
+            $salesOrdersWHI = $salesOrdersWHI->orderByRaw('MIN(DocDate) DESC')
                 ->skip(($page - 1) * $limit)
                 ->take($limit)
                 ->get();
@@ -269,7 +277,8 @@ class OrderController extends Controller
             $page = $request->page ?? 1;
             $limit = $request->limit ?? 10;
             $buyersCode = $request->buyersCode ?? "";
-            
+            $soNumber = $request->soNumber ?? "";
+
             $salesOrdersWHI = ORDR_PBI::with(['items' => function($query) {
                 $query->select('DocEntry', 'Dscription', 'ItemCode', 'Quantity');
             }])
@@ -278,6 +287,9 @@ class OrderController extends Controller
 
             if (!empty($buyersCode)) {
                 $salesOrdersWHI = $salesOrdersWHI->where('NumAtCard',$buyersCode); 
+            }
+            if (!empty($soNumber)) {
+                $salesOrdersWHI = $salesOrdersWHI->where('DocEntry',$soNumber); 
             }
 
             if ($request->filled('startDate') && $request->filled('endDate')) {
@@ -326,9 +338,7 @@ class OrderController extends Controller
             $endDate = $request->endDate ?? "";
             
             $salesOrdersWHI = ORDR_PBI::select(DB::raw('MIN(DocDate) as DocDate'),'NumAtCard as BuyersCode', 'CardName',DB::raw('COUNT(NumAtCard) as Count'))
-            ->where('DocStatus', 'O')
-            ->groupBy('NumAtCard')
-            ->groupBy('CardName');
+            ->where('DocStatus', 'O');
 
             if ($request->filled('startDate') && $request->filled('endDate')) {
                 $start = Carbon::parse($request->startDate)->startOfDay();
@@ -337,9 +347,12 @@ class OrderController extends Controller
                 $salesOrdersWHI->whereBetween('DocDate', [$start, $end]);
             }
 
+            $salesOrdersWHI = $salesOrdersWHI->groupBy('NumAtCard')
+            ->groupBy('CardName');
+
             $totalCount = (clone $salesOrdersWHI)->get()->count();
 
-            $salesOrdersWHI = $salesOrdersWHI->orderBy("NumAtCard","desc")
+            $salesOrdersWHI = $salesOrdersWHI->orderByRaw('MIN(DocDate) DESC')
                 ->skip(($page - 1) * $limit)
                 ->take($limit)
                 ->get();
