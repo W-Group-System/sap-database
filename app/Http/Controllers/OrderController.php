@@ -114,11 +114,23 @@ class OrderController extends Controller
             "data"=>null
         ];
         $isSuccess = false;
+
         try {
             $page = $request->page ?? 1;
             $limit = $request->limit ?? 10;
             $startDate = $request->startDate ?? "";
             $endDate = $request->endDate ?? "";
+            $apiKey = $request->header('apikey')??"";
+
+            if (empty($apiKey)) {
+                $response["message"] = "Invalid API key.";
+                return response()->json($response, 400);
+            }
+
+            if ($apiKey != config('app.api_key')) {
+                $response["message"] = "Invalid API key.";
+                return response()->json($response, 400);
+            }
             
             $salesOrdersWHI = ORDR::select(DB::raw('MIN(DocDate) as DocDate'),'NumAtCard as BuyersCode', 'CardName',DB::raw('COUNT(NumAtCard) as Count'))
             ->where('DocStatus', 'O');
@@ -169,6 +181,17 @@ class OrderController extends Controller
             $limit = $request->limit ?? 10;
             $buyersCode = $request->buyersCode ?? "";
             $soNumber = $request->soNumber ?? "";
+            $apiKey = $request->header('apikey')??"";
+
+            if (empty($apiKey)) {
+                $response["message"] = "Invalid API key.";
+                return response()->json($response, 400);
+            }
+
+            if ($apiKey != config('app.api_key')) {
+                $response["message"] = "Invalid API key.";
+                return response()->json($response, 400);
+            }
 
             $salesOrdersWHI = ORDR_PBI::with(['items' => function($query) {
                 $query->select('DocEntry', 'Dscription', 'ItemCode', 'Quantity');
@@ -227,6 +250,17 @@ class OrderController extends Controller
             $limit = $request->limit ?? 10;
             $startDate = $request->startDate ?? "";
             $endDate = $request->endDate ?? "";
+            $apiKey = $request->header('apikey')??"";
+
+            if (empty($apiKey)) {
+                $response["message"] = "Invalid API key.";
+                return response()->json($response, 400);
+            }
+
+            if ($apiKey != config('app.api_key')) {
+                $response["message"] = "Invalid API key.";
+                return response()->json($response, 400);
+            }
             
             $salesOrdersWHI = ORDR_PBI::select(DB::raw('MIN(DocDate) as DocDate'),'NumAtCard as BuyersCode', 'CardName',DB::raw('COUNT(NumAtCard) as Count'))
             ->where('DocStatus', 'O');
@@ -278,6 +312,17 @@ class OrderController extends Controller
             $limit = $request->limit ?? 10;
             $buyersCode = $request->buyersCode ?? "";
             $soNumber = $request->soNumber ?? "";
+            $apiKey = $request->header('apikey')??"";
+            
+            if (empty($apiKey)) {
+                $response["message"] = "Invalid API key.";
+                return response()->json($response, 400);
+            }
+
+            if ($apiKey != config('app.api_key')) {
+                $response["message"] = "Invalid API key.";
+                return response()->json($response, 400);
+            }
 
             $salesOrdersWHI = ORDR_PBI::with(['items' => function($query) {
                 $query->select('DocEntry', 'Dscription', 'ItemCode', 'Quantity');
@@ -336,6 +381,17 @@ class OrderController extends Controller
             $limit = $request->limit ?? 10;
             $startDate = $request->startDate ?? "";
             $endDate = $request->endDate ?? "";
+            $apiKey = $request->header('apikey')??"";
+            
+            if (empty($apiKey)) {
+                $response["message"] = "Invalid API key.";
+                return response()->json($response, 400);
+            }
+
+            if ($apiKey != config('app.api_key')) {
+                $response["message"] = "Invalid API key.";
+                return response()->json($response, 400);
+            }
             
             $salesOrdersWHI = ORDR_PBI::select(DB::raw('MIN(DocDate) as DocDate'),'NumAtCard as BuyersCode', 'CardName',DB::raw('COUNT(NumAtCard) as Count'))
             ->where('DocStatus', 'O');
