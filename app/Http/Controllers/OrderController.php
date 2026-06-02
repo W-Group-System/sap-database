@@ -119,7 +119,10 @@ class OrderController extends Controller
             $page = $request->page ?? 1;
             $limit = $request->limit ?? 10;
             $startDate = $request->startDate ?? "";
-            $endDate = $request->endDate ?? "";
+            $endDate = $request->endDate ?? $startDate;
+            $dateCreated = $request->dateCreated ?? "";
+            $buyersCode = $request->buyersCode ?? "";
+            $buyersName = $request->buyersName ?? "";
             $apiKey = $request->header('apikey')??"";
 
             if (empty($apiKey)) {
@@ -135,12 +138,24 @@ class OrderController extends Controller
             $salesOrdersWHI = ORDR::select(DB::raw('MIN(DocDate) as DocDate'),'NumAtCard as BuyersCode', 'CardName',DB::raw('COUNT(NumAtCard) as Count'))
             ->where('DocStatus', 'O');
 
-            if ($request->filled('startDate') && $request->filled('endDate')) {
+            if ($request->filled('startDate')) {
                 $start = Carbon::parse($request->startDate)->startOfDay();
                 $end   = Carbon::parse($request->endDate)->endOfDay();
 
                 $salesOrdersWHI->whereBetween('DocDate', [$start, $end]);
             }
+
+            if (!empty($buyersCode)) {
+                $salesOrdersWHI->where('NumAtCard', 'like', '%' . $buyersCode . '%');
+            }
+            if (!empty($buyersName)) {
+                $salesOrdersWHI->where('CardName', 'like', '%' . $buyersName . '%');
+            }
+            if (!empty($dateCreated)) {
+                $parsedDateCreated = Carbon::parse($dateCreated);
+                $salesOrdersWHI->where('DocDate', $parsedDateCreated);
+            }
+
             $salesOrdersWHI = $salesOrdersWHI->groupBy('NumAtCard')
             ->groupBy('CardName');
             $totalCount = (clone $salesOrdersWHI)->get()->count();
