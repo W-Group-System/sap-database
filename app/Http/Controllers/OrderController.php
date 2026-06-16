@@ -64,8 +64,11 @@ class OrderController extends Controller
             
             $salesOrdersWHI = ORDR::with(['items' => function($query) {
                 $query->select('DocEntry', 'Dscription', 'ItemCode', 'Quantity');
+            },
+            'bdeName'  => function($bde) {
+                $bde->select('SlpName','SlpCode');
             }])
-            ->select('DocEntry', 'DocDate', 'DocNum', 'CardCode as Customer', 'NumAtCard as BuyersCode', 'CardName', 'U_Label', 'U_Packaging')
+            ->select('DocEntry', 'DocDate', 'DocNum', 'CardCode as Customer', 'NumAtCard as BuyersCode', 'CardName', 'U_Label', 'U_Packaging','SlpCode','U_Inco','U_PortDestination','U_CountryDen')
             ->where('DocStatus', 'O');
 
             if (!empty($buyersCode)) {
@@ -210,8 +213,11 @@ class OrderController extends Controller
 
             $salesOrdersWHI = ORDR_PBI::with(['items' => function($query) {
                 $query->select('DocEntry', 'Dscription', 'ItemCode', 'Quantity');
+            },
+            'bdeName'  => function($bde) {
+                $bde->select('SlpName','SlpCode');
             }])
-            ->select('DocEntry', 'DocDate', 'DocNum', 'CardCode as Customer', 'NumAtCard as BuyersCode', 'CardName', 'U_Label', 'U_Packaging')
+            ->select('DocEntry', 'DocDate', 'DocNum', 'CardCode as Customer', 'NumAtCard as BuyersCode', 'CardName', 'U_Label', 'U_Packaging','SlpCode','U_Inco','U_PortDestination','U_CountryDen')
             ->where('DocStatus', 'O');
 
             if (!empty($buyersCode)) {
@@ -355,8 +361,11 @@ class OrderController extends Controller
 
             $salesOrdersWHI = ORDR_PBI::with(['items' => function($query) {
                 $query->select('DocEntry', 'Dscription', 'ItemCode', 'Quantity');
+            },
+            'bdeName'  => function($bde) {
+                $bde->select('SlpName','SlpCode');
             }])
-            ->select('DocEntry', 'DocDate', 'DocNum', 'CardCode as Customer', 'NumAtCard as BuyersCode', 'CardName', 'U_Label', 'U_Packaging')
+            ->select('DocEntry', 'DocDate', 'DocNum', 'CardCode as Customer', 'NumAtCard as BuyersCode', 'CardName', 'U_Label', 'U_Packaging','SlpCode','U_Inco','U_PortDestination','U_CountryDen')
             ->where('DocStatus', 'O');
 
             if (!empty($buyersCode)) {

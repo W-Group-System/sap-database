@@ -13,4 +13,8 @@ class ORDR extends Model
     {
         return $this->hasMany(RDR1::class, 'DocEntry', 'DocEntry');
     }
+    public function bdeName()
+    {
+        return $this->hasOne(OSLP::class, 'SlpCode', 'SlpCode');
+    }
 }
