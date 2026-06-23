@@ -79,7 +79,23 @@ class OrderController extends Controller
             'bdeName'  => function($bde) {
                 $bde->select('SlpName','SlpCode');
             }])
-            ->select('DocEntry', 'DocDate', 'DocNum', 'CardCode as Customer', 'NumAtCard as BuyersCode', 'CardName', 'U_Label', 'U_Packaging','SlpCode','U_Inco','U_PortDestination','U_CountryDen','U_Delivery','U_Onpallet','U_Modeship','U_PortLoad as LoadingPort')
+            ->select(
+                'DocEntry', 
+                'DocDate', 
+                'DocNum', 
+                'CardCode as Customer', 
+                'NumAtCard as BuyersCode', 
+                'CardName', 
+                'U_Label', 
+                'U_Packaging',
+                'SlpCode',
+                DB::raw("CASE WHEN COALESCE(U_Inco,'') <> '' THEN U_Inco WHEN COALESCE(U_Delivery,'') <> '' THEN U_Delivery ELSE '' END AS IncoTerms"),
+                DB::raw("CASE WHEN U_PortDestination IS NOT NULL THEN U_Inco WHEN COALESCE(U_CountryDen,'') <> '' THEN U_Delivery ELSE '' END AS PortOfDestination"),
+                'U_CountryDen',
+                'U_Onpallet',
+                'U_Modeship',
+                'U_PortLoad as LoadingPort'
+            )
             ->where('DocStatus', 'O');
 
             if (!empty($buyersCode)) {
@@ -228,7 +244,23 @@ class OrderController extends Controller
             'bdeName'  => function($bde) {
                 $bde->select('SlpName','SlpCode');
             }])
-            ->select('DocEntry', 'DocDate', 'DocNum', 'CardCode as Customer', 'NumAtCard as BuyersCode', 'CardName', 'U_Label', 'U_Packaging','SlpCode','U_Inco','U_CountryDen as U_PortDestination','U_CountryDen','U_Delivery','U_Onpallet','U_Modeship','U_Loadingport as LoadingPort')
+            ->select(
+                'DocEntry', 
+                'DocDate', 
+                'DocNum', 
+                'CardCode as Customer', 
+                'NumAtCard as BuyersCode', 
+                'CardName', 
+                'U_Label', 
+                'U_Packaging',
+                'SlpCode',
+                DB::raw("CASE WHEN COALESCE(U_Inco,'') <> '' THEN U_Inco WHEN COALESCE(U_Delivery,'') <> '' THEN U_Delivery ELSE '' END AS IncoTerms"),
+                DB::raw("CASE WHEN U_PortDestination IS NOT NULL THEN U_Inco WHEN COALESCE(U_CountryDen,'') <> '' THEN U_Delivery ELSE '' END AS PortOfDestination"),
+                'U_CountryDen',
+                'U_Onpallet',
+                'U_Modeship',
+                'U_Loadingport as LoadingPort'
+            )
             ->where('DocStatus', 'O');
 
             if (!empty($buyersCode)) {
@@ -376,7 +408,23 @@ class OrderController extends Controller
             'bdeName'  => function($bde) {
                 $bde->select('SlpName','SlpCode');
             }])
-            ->select('DocEntry', 'DocDate', 'DocNum', 'CardCode as Customer', 'NumAtCard as BuyersCode', 'CardName', 'U_Label', 'U_Packaging','SlpCode','U_Inco','U_CountryDen as U_PortDestination','U_CountryDen','U_Delivery','U_Onpallet','U_Modeship','U_Loadingport as LoadingPort')
+            ->select(
+                'DocEntry', 
+                'DocDate', 
+                'DocNum', 
+                'CardCode as Customer', 
+                'NumAtCard as BuyersCode', 
+                'CardName', 
+                'U_Label', 
+                'U_Packaging',
+                'SlpCode',
+                DB::raw("CASE WHEN COALESCE(U_Inco,'') <> '' THEN U_Inco WHEN COALESCE(U_Delivery,'') <> '' THEN U_Delivery ELSE '' END AS IncoTerms"),
+                DB::raw("CASE WHEN U_PortDestination IS NOT NULL THEN U_Inco WHEN COALESCE(U_CountryDen,'') <> '' THEN U_Delivery ELSE '' END AS PortOfDestination"),
+                'U_CountryDen',
+                'U_Onpallet',
+                'U_Modeship',
+                'U_Loadingport as LoadingPort'
+            )
             ->where('DocStatus', 'O');
 
             if (!empty($buyersCode)) {
