@@ -402,7 +402,7 @@ class OrderController extends Controller
                 return response()->json($response, 400);
             }
 
-            $salesOrdersWHI = ORDR_PBI::with(['items' => function($query) {
+            $salesOrdersWHI = ORDR_CCC::with(['items' => function($query) {
                 $query->select('DocEntry', 'Dscription', 'ItemCode', 'Quantity');
             },
             'bdeName'  => function($bde) {
