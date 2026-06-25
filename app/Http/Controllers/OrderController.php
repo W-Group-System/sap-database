@@ -493,7 +493,7 @@ class OrderController extends Controller
                 return response()->json($response, 400);
             }
             
-            $salesOrdersWHI = ORDR_PBI::select(DB::raw('MIN(DocDate) as DocDate'),'NumAtCard as BuyersCode', 'CardName',DB::raw('COUNT(NumAtCard) as Count'))
+            $salesOrdersWHI = ORDR_CCC::select(DB::raw('MIN(DocDate) as DocDate'),'NumAtCard as BuyersCode', 'CardName',DB::raw('COUNT(NumAtCard) as Count'))
             ->where('DocStatus', 'O');
 
             if ($request->filled('startDate')) {
