@@ -78,6 +78,9 @@ class OrderController extends Controller
             },
             'bdeName'  => function($bde) {
                 $bde->select('SlpName','SlpCode');
+            },
+            'contactName'  => function($cnt) {
+                $cnt->select('CntctCode','Name');
             }])
             ->select(
                 'DocEntry', 
@@ -88,6 +91,7 @@ class OrderController extends Controller
                 'CardName', 
                 'U_Label', 
                 'U_Packaging',
+                'CntctCode',
                 'SlpCode',
                 DB::raw("CASE WHEN COALESCE(U_Inco,'') <> '' THEN U_Inco WHEN COALESCE(U_Delivery,'') <> '' THEN U_Delivery ELSE '' END AS IncoTerms"),
                 DB::raw("CASE WHEN U_PortDestination IS NOT NULL THEN U_PortDestination WHEN COALESCE(U_CountryDen,'') <> '' THEN U_CountryDen ELSE '' END AS PortOfDestination"),
@@ -243,6 +247,9 @@ class OrderController extends Controller
             },
             'bdeName'  => function($bde) {
                 $bde->select('SlpName','SlpCode');
+            },
+            'contactName'  => function($bde) {
+                $bde->select('CntctCode','Name');
             }])
             ->select(
                 'DocEntry', 
@@ -253,6 +260,7 @@ class OrderController extends Controller
                 'CardName', 
                 'U_Label', 
                 'U_Packaging',
+                'CntctCode',
                 'SlpCode',
                 DB::raw("CASE WHEN COALESCE(U_Inco,'') <> '' THEN U_Inco WHEN COALESCE(U_Delivery,'') <> '' THEN U_Delivery ELSE '' END AS IncoTerms"),
                 'U_Destinationport AS PortOfDestination',
@@ -407,6 +415,9 @@ class OrderController extends Controller
             },
             'bdeName'  => function($bde) {
                 $bde->select('SlpName','SlpCode');
+            },
+            'contactName'  => function($cnt) {
+                $cnt->select('CntctCode','Name');
             }])
             ->select(
                 'DocEntry', 
@@ -417,6 +428,7 @@ class OrderController extends Controller
                 'CardName', 
                 'U_Label', 
                 'U_Packaging',
+                'CntctCode',
                 'SlpCode',
                 DB::raw("CASE WHEN COALESCE(U_Inco,'') <> '' THEN U_Inco WHEN COALESCE(U_Delivery,'') <> '' THEN U_Delivery ELSE '' END AS IncoTerms"),
                 'U_Destinationport AS PortOfDestination',

@@ -17,4 +17,8 @@ class ORDR extends Model
     {
         return $this->hasOne(OSLP::class, 'SlpCode', 'SlpCode');
     }
+    public function contactName()
+    {
+        return $this->hasOne(OCPR::class, 'CntctCode', 'CntctCode');
+    }
 }

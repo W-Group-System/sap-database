@@ -17,4 +17,8 @@ class ORDR_PBI extends Model
     {
         return $this->hasOne(OSLP_PBI::class, 'SlpCode', 'SlpCode');
     }
+    public function contactName()
+    {
+        return $this->hasOne(OCPR_PBI::class, 'CntctCode', 'CntctCode');
+    }
 }

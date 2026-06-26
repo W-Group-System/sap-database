@@ -17,4 +17,8 @@ class ORDR_CCC extends Model
     {
         return $this->hasOne(OSLP_CCC::class, 'SlpCode', 'SlpCode');
     }
+    public function contactName()
+    {
+        return $this->hasOne(OCPR_CCC::class, 'CntctCode', 'CntctCode');
+    }
 }
