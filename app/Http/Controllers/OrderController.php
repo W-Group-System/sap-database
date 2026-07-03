@@ -62,6 +62,7 @@ class OrderController extends Controller
             $buyersCode = $request->buyersCode ?? "";
             $soNumber = $request->soNumber ?? "";
             $apiKey = $request->header('apikey')??"";
+            $status = $request->status ?? "";
             
             if (empty($apiKey)) {
                 $response["message"] = "Invalid API key.";
@@ -100,8 +101,11 @@ class OrderController extends Controller
                 'U_Onpallet',
                 'U_Modeship',
                 'U_PortLoad as LoadingPort'
-            )
-            ->where('DocStatus', 'O');
+            );
+
+            if (!empty($status)) {
+                $salesOrdersWHI = $salesOrdersWHI->where('DocStatus', $status);
+            }
 
             if (!empty($buyersCode)) {
                 $salesOrdersWHI = $salesOrdersWHI->where('NumAtCard',$buyersCode); 
@@ -232,6 +236,7 @@ class OrderController extends Controller
             $buyersCode = $request->buyersCode ?? "";
             $soNumber = $request->soNumber ?? "";
             $apiKey = $request->header('apikey')??"";
+            $status = $request->status ?? "";
 
             if (empty($apiKey)) {
                 $response["message"] = "Invalid API key.";
@@ -270,8 +275,11 @@ class OrderController extends Controller
                 'U_Onpallet',
                 'U_Modeship',
                 'U_Loadingport as LoadingPort'
-            )
-            ->where('DocStatus', 'O');
+            );
+            
+            if (!empty($status)) {
+                $salesOrdersWHI = $salesOrdersWHI->where('DocStatus', $status);
+            }
 
             if (!empty($buyersCode)) {
                 $salesOrdersWHI = $salesOrdersWHI->where('NumAtCard',$buyersCode); 
@@ -401,6 +409,7 @@ class OrderController extends Controller
             $buyersCode = $request->buyersCode ?? "";
             $soNumber = $request->soNumber ?? "";
             $apiKey = $request->header('apikey')??"";
+            $status = $request->status ?? "";
             
             if (empty($apiKey)) {
                 $response["message"] = "Invalid API key.";
@@ -439,8 +448,11 @@ class OrderController extends Controller
                 'U_Onpallet',
                 'U_Modeship',
                 'U_Loadingport as LoadingPort'
-            )
-            ->where('DocStatus', 'O');
+            );
+
+            if (!empty($status)) {
+                $salesOrdersWHI = $salesOrdersWHI->where('DocStatus', $status);
+            }
 
             if (!empty($buyersCode)) {
                 $salesOrdersWHI = $salesOrdersWHI->where('NumAtCard',$buyersCode); 
